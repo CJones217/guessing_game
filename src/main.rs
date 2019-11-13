@@ -6,6 +6,10 @@ fn main() {
     println!("Guess the number!");
 
     let secret_number = rand::thread_rng().gen_range(1, 11);
+    const MAX_POINTS: u8 = 5;
+    let mut correct_times: u8 =0;
+    const MAX_ERRORS: u8 = 5;
+    let mut wrong_times: u8 =0;
 
     loop {
         println!("input your guess.");
@@ -23,12 +27,29 @@ fn main() {
         println!("You guessed: {}", guess);
 
         match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
-            Ordering::Equal => {
-                println!("Correct! goodbye");
-                break;
+            Ordering::Less => {
+                println!("Too small!");
+                wrong_times+=1;
+                println!("{} guesses wrong", wrong_times);
             },
+            Ordering::Greater => {
+                println!("Too big!");
+                wrong_times+=1;
+                println!("{} guesses wrong", wrong_times);
+            },
+            Ordering::Equal => {
+                correct_times+=1;
+                println!("Correct! you correctly guessed {} times",correct_times);
+                //TODO add so the random number changes after every guess correct
+            },
+        }
+        if wrong_times == MAX_ERRORS{
+            println!("too many wrong guesses ... you suck!");
+            break;
+        }
+        else if correct_times == MAX_POINTS {
+            println!("You guessed correctly {} times! you are cool", correct_times);
+            break;
         }
     }
 }
