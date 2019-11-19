@@ -5,10 +5,10 @@ use std::cmp::Ordering;
 fn main() {
     println!("Guess the number!");
 
-    let secret_number = rand::thread_rng().gen_range(1, 11);
-    const MAX_POINTS: u8 = 5;
+    let mut secret_number = rand::thread_rng().gen_range(1, 11);
+    const MAX_POINTS: u8 = 3;
     let mut correct_times: u8 =0;
-    const MAX_ERRORS: u8 = 5;
+    const MAX_ERRORS: u8 = 10;
     let mut wrong_times: u8 =0;
 
     loop {
@@ -40,7 +40,7 @@ fn main() {
             Ordering::Equal => {
                 correct_times+=1;
                 println!("Correct! you correctly guessed {} times",correct_times);
-                //TODO add so the random number changes after every guess correct
+                secret_number = rand::thread_rng().gen_range(1, 11);
             },
         }
         if wrong_times == MAX_ERRORS{
